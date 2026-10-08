@@ -1,15 +1,16 @@
-# رزمة Rozma — مستودع الإصدارات الرسمية
+# رزمة Rozma — مستودع الإصدارات والتنزيل
 
-المستودع المخصص لنشر وتوزيع إصدارات وتحديثات تطبيق **رزمة Rozma** لنظام تشغيل Windows.
+المستودع الرسمي العام لتوزيع إصدارات وتحديثات تطبيق **رزمة Rozma** لنظام التشغيل Windows.
 
 > **رزمة Rozma | كل أدوات تعديل الـPDF والصور للمكتبات ومراكز الطباعة ، في برنامج واحد.**
 
 ---
 
-## روابط التحميل والتحديثات
+## 🌐 صفحة الهبوط والتنزيل المباشر
 
-- ⬇️ **أحدث إصدار (NSIS Installer):** [تحميل Rozma-Setup.exe](https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe)
-- 📦 **جميع الإصدارات وملاحظات التحديث:** [صفحة Releases](https://github.com/AHKH3/Rozma-releases/releases)
+- 🌐 **الموقع الرسمي وصفحة الهبوط:** [https://ahkh3.github.io/Rozma-releases/](https://ahkh3.github.io/Rozma-releases/)
+- ⬇️ **أحدث إصدار (NSIS Installer):** [تنزيل Rozma-Setup.exe](https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe)
+- 📦 **سجل الإصدارات وملاحظات التحديث:** [صفحة Releases](https://github.com/AHKH3/Rozma-releases/releases)
 
 ---
 
