@@ -8,7 +8,7 @@
 
 ## 🌐 صفحة الهبوط والتنزيل المباشر
 
-- 🌐 **الموقع الرسمي وصفحة الهبوط:** [https://ahkh3.github.io/Rozma-releases/](https://ahkh3.github.io/Rozma-releases/)
+- 🌐 **الموقع الرسمي وصفحة الهبوط:** [https://rozma.ahkh.xyz/](https://rozma.ahkh.xyz/)
 - ⬇️ **أحدث إصدار (NSIS Installer):** [تنزيل Rozma-Setup.exe](https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe)
 - 📦 **سجل الإصدارات وملاحظات التحديث:** [صفحة Releases](https://github.com/AHKH3/Rozma-releases/releases)
 
