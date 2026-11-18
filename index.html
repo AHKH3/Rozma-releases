@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>رزمة Rozma — مساحة عمل محلية لتعديل الـPDF والصور على ويندوز</title>
-  <meta name="description" content="رزمة Rozma تطبيق سطح مكتب سريع على ويندوز لتجهيز ملفات الـPDF والصور محليًا داخل المكتبات ومراكز الطباعة دون رفع الملفات." />
+  <title>رزمة — تجهيز الصور والملفات للطباعة A4 على ويندوز</title>
+  <meta name="description" content="رزمة تطبيق سطح مكتب محلي لتجهيز الصور والملفات للطباعة مقاس A4 والتقاط الحواف تلقائياً مع 9 أدوات PDF مدمجة على ويندوز." />
   <meta name="theme-color" content="#2563EB" />
   <link rel="icon" type="image/png" sizes="192x192" href="branding/app-icon-192.png" />
   <link rel="icon" type="image/png" sizes="512x512" href="branding/app-icon-512.png" />
@@ -50,27 +50,21 @@
       --surface-3: #FFFFFF;
       --border-soft: #E2E8F0;
       --border-strong: #CBD5E1;
-      --border-glow: rgba(37, 99, 235, 0.28);
       --text-primary: #0F172A;
       --text-secondary: #475569;
-      --text-muted: #64748B;
+      --text-muted: #475569;
       --accent: #2563EB;
       --accent-hover: #1D4ED8;
-      --accent-deep: #1E40AF;
-      --accent-soft: rgba(37, 99, 235, 0.10);
-      --success: #059669;
-      --success-soft: rgba(5, 150, 105, 0.10);
-      --danger: #E11D48;
-      --danger-soft: rgba(225, 29, 72, 0.10);
-      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.03);
-      --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
-      --radius-xs: 6px;
-      --radius-sm: 8px;
-      --radius: 10px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 22px;
-      --radius-pill: 999px;
+      --accent-text: #1D4ED8;
+      --accent-tint: #EFF6FF;
+      --success: #047857;
+      --success-tint: #ECFDF5;
+      --danger: #BE123C;
+      --danger-tint: #FFF1F2;
+      --grid-dot: rgba(15, 23, 42, 0.14);
+      --dot-color: rgba(37, 99, 235, 0.24);
+      --shadow-frame: 0 12px 32px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-tile: 0 6px 16px rgba(15, 23, 42, 0.10), 0 1px 2px rgba(15, 23, 42, 0.06);
       --font-display: "Amiri", "Noto Naskh Arabic", serif;
       --font-ui: "Noto Naskh Arabic", "Amiri", serif;
       --font-latin: "Playfair Display", "Noto Naskh Arabic", serif;
@@ -86,31 +80,48 @@
       --surface-3: #1C202B;
       --border-soft: #1E2230;
       --border-strong: #2A3042;
-      --border-glow: rgba(59, 130, 246, 0.34);
       --text-primary: #F8FAFC;
       --text-secondary: #CBD5E1;
       --text-muted: #94A3B8;
       --accent: #2563EB;
       --accent-hover: #3B82F6;
-      --accent-deep: #1E40AF;
-      --accent-soft: rgba(37, 99, 235, 0.18);
+      --accent-text: #60A5FA;
+      --accent-tint: rgba(37, 99, 235, 0.18);
       --success: #34D399;
-      --success-soft: rgba(52, 211, 153, 0.14);
+      --success-tint: rgba(52, 211, 153, 0.14);
       --danger: #FB7185;
-      --danger-soft: rgba(251, 113, 133, 0.14);
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.28);
-      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.48);
+      --danger-tint: rgba(251, 113, 133, 0.14);
+      --grid-dot: rgba(248, 250, 252, 0.14);
+      --dot-color: rgba(59, 130, 246, 0.30);
+      --shadow-frame: 0 16px 36px rgba(0, 0, 0, 0.45);
+      --shadow-tile: 0 8px 18px rgba(0, 0, 0, 0.42);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
+    ::selection {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 999px;
+      border: 2px solid var(--bg);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
     body {
       margin: 0;
       font-family: var(--font-ui);
       font-size: 0.96rem;
-      line-height: 1.6;
+      line-height: 1.55;
       color: var(--text-primary);
       background: var(--bg);
+      caret-color: var(--accent);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -118,12 +129,17 @@
     h1, h2, h3, h4 {
       margin: 0;
       font-family: var(--font-display);
-      line-height: 1.32;
+      line-height: 1.28;
       color: var(--text-primary);
     }
     p { margin: 0; }
-    a { color: inherit; text-decoration: none; }
+    a { color: inherit; text-decoration: none; text-underline-offset: 4px; }
     button { font-family: inherit; cursor: pointer; }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
 
     .num {
       font-family: var(--font-latin);
@@ -133,20 +149,71 @@
       unicode-bidi: isolate;
     }
 
-    .wrap {
-      width: min(1180px, calc(100% - 32px));
-      margin-inline: auto;
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
     }
 
-    /* Sticky Command Bar */
-    .cmdbar {
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.94rem;
+      font-weight: 700;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      color: var(--text-primary);
+      transition: background-color 140ms var(--ease), border-color 140ms var(--ease), transform 140ms var(--ease);
+    }
+    .btn:hover {
+      background: var(--surface-1);
+      border-color: var(--text-muted);
+    }
+    .btn--sm {
+      min-height: 36px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      border-radius: 8px;
+    }
+    .btn--primary {
+      background: var(--accent);
+      border-color: var(--accent-hover);
+      color: #FFFFFF;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    }
+    .btn--primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* 1. Sticky Architectural Header */
+    .topbar {
       position: sticky;
       top: 0;
       z-index: 40;
-      background: var(--surface-2);
+      background: var(--bg);
       border-bottom: 1px solid var(--border-soft);
     }
-    .cmdbar__inner {
+    .topbar__inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -157,612 +224,954 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      flex: none;
+      font-weight: 700;
     }
     .brand__mark {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-sm);
+      border-radius: 8px;
       display: block;
     }
-    .brand__text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-    .brand__ar {
+    .brand__name {
       font-family: var(--font-display);
-      font-size: 1.15rem;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+    .brand__ver {
+      font-size: 0.75rem;
       font-weight: 700;
-    }
-    .brand__en {
-      font-family: var(--font-latin);
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.02em;
-    }
-    .cmdbar__nav {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .cmdbar__link {
-      display: inline-flex;
-      align-items: center;
-      height: 34px;
-      padding: 0 12px;
-      border-radius: var(--radius-sm);
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      transition: background 140ms var(--ease), color 140ms var(--ease);
-    }
-    .cmdbar__link:hover {
+      padding: 2px 8px;
+      border-radius: 6px;
       background: var(--surface-1);
-      color: var(--text-primary);
+      border: 1px solid var(--border-soft);
+      color: var(--text-secondary);
     }
-    .cmdbar__actions {
+    .nav {
       display: flex;
       align-items: center;
-      gap: 8px;
-      flex: none;
+      gap: 28px;
+    }
+    .nav a {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      padding: 6px 2px;
+      transition: color 140ms var(--ease);
+    }
+    .nav a:hover { color: var(--text-primary); }
+
+    .topbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .theme-switch {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 9px;
+      background: var(--surface-1);
+      border: 1px solid var(--border-soft);
+    }
+    .theme-switch button {
+      border: 0;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: background-color 140ms var(--ease), color 140ms var(--ease);
+    }
+    .theme-switch button[aria-pressed="true"] {
+      background: var(--surface-2);
+      color: var(--text-primary);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
     }
 
-    /* Tactile Cobalt & Architectural Buttons */
-    .btn {
+    /* 2. Hero + Connected Studio Canvas */
+    .hero {
+      position: relative;
+      padding-top: 56px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--border-soft);
+      overflow: hidden;
+    }
+    .hero__backdrop {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.9;
+      z-index: 0;
+    }
+    .hero__waves {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 360px;
+      pointer-events: none;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 4%;
+      opacity: 0.35;
+      z-index: 0;
+    }
+    .hero__wave-col {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 180px;
+      margin-top: 40px;
+    }
+    .hero__wave-bar {
+      width: 2px;
+      background: var(--border-strong);
+      border-radius: 2px;
+      animation: barPulse 4.6s ease-in-out infinite;
+    }
+    .hero__wave-bar:nth-child(2n) { animation-delay: -1.4s; }
+    .hero__wave-bar:nth-child(3n) { animation-delay: -2.8s; }
+    @keyframes barPulse {
+      0%, 100% { transform: scaleY(0.75); opacity: 0.5; }
+      50% { transform: scaleY(1.12); opacity: 1; }
+    }
+
+    .hero__head {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 38px;
+    }
+    .hero__title {
+      font-size: clamp(1.75rem, 4.5vw, 3.65rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.24;
+      margin-bottom: 16px;
+    }
+    .hero__tile {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      min-height: 40px;
-      padding: 0 18px;
-      border-radius: var(--radius);
-      font-size: 0.88rem;
-      font-weight: 700;
-      border: 1px solid var(--border-strong);
-      background: var(--surface-2);
-      color: var(--text-primary);
-      box-shadow: none;
-      transform: none;
-      white-space: nowrap;
-      transition: background 140ms var(--ease), border-color 140ms var(--ease), box-shadow 140ms var(--ease), transform 140ms var(--ease);
-    }
-    .btn:hover {
-      background: var(--surface-1);
-      border-color: var(--border-strong);
-      box-shadow: 0 2px 0 var(--border-strong), 0 6px 14px rgba(15, 23, 42, 0.06);
-      transform: none;
-    }
-    .btn:active {
-      transform: translateY(1.5px);
-      box-shadow: 0 1px 0 var(--border-strong);
-    }
-    .btn svg { width: 16px; height: 16px; flex: none; }
-    .btn--primary {
-      background: var(--accent);
-      border-color: var(--accent-deep);
-      color: #FFFFFF;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
-    }
-    .btn--primary:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-deep);
-      color: #FFFFFF;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 2px 0 var(--accent-deep), 0 8px 18px rgba(37, 99, 235, 0.22);
-    }
-    .btn--lg { min-height: 46px; padding: 0 22px; font-size: 0.94rem; border-radius: var(--radius-md); }
-    .btn--sm { min-height: 34px; padding: 0 14px; font-size: 0.82rem; border-radius: var(--radius-sm); }
-    .icon-btn {
-      width: 36px;
-      height: 36px;
-      padding: 0;
-      border-radius: var(--radius-sm);
-      display: grid;
-      place-items: center;
+      width: 44px;
+      height: 44px;
+      vertical-align: middle;
+      margin: 0 8px;
+      border-radius: 11px;
+      background: #FFFFFF;
       border: 1px solid var(--border-soft);
-      background: var(--surface-1);
-      color: var(--text-secondary);
+      box-shadow: var(--shadow-tile);
+      transform: rotate(-6deg) translateY(-3px);
     }
-    .icon-btn:hover { color: var(--text-primary); border-color: var(--border-strong); }
-    .icon-btn svg { width: 17px; height: 17px; }
-    .icon-sun { display: none; }
-    .icon-moon { display: block; }
-    [data-theme="blueprint"] .icon-sun { display: block; }
-    [data-theme="blueprint"] .icon-moon { display: none; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-    /* Split Architectural Hero */
-    .hero {
-      padding: 48px 0 56px;
-      border-bottom: 1px solid var(--border-soft);
+    .hero__accent {
+      color: var(--accent-text);
+      display: inline-block;
+      padding-bottom: 3px;
+      border-bottom: 3px dashed var(--accent);
     }
-    .hero__grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.02fr) minmax(0, 1.18fr);
-      gap: 32px;
-      align-items: center;
-    }
-    .hero__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 12px;
-      border-radius: var(--radius-pill);
-      background: var(--surface-1);
-      border: 1px solid var(--border-soft);
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-      margin-bottom: 16px;
-    }
-    .hero__dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-    .hero__title {
-      font-size: clamp(2rem, 3.8vw, 2.85rem);
-      font-weight: 700;
-      letter-spacing: -0.015em;
-      margin-bottom: 14px;
-    }
-    .hero__title span { color: var(--accent); }
     .hero__sub {
-      font-size: 1rem;
+      font-size: 1.06rem;
       color: var(--text-secondary);
-      max-width: 52ch;
-      margin-bottom: 24px;
+      max-width: 58ch;
+      margin: 0 auto 24px;
     }
     .hero__cta {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-    .hero__meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 16px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-    .hero__meta-item {
-      display: inline-flex;
       align-items: center;
-      gap: 6px;
-    }
-    .hero__meta-item svg { width: 14px; height: 14px; color: var(--accent); }
-
-    /* Interactive Desktop Workspace Preview */
-    .preview-shell {
-      background: var(--surface-2);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-    }
-    .preview-shell__bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 14px;
-      background: var(--surface-1);
-      border-bottom: 1px solid var(--border-soft);
-    }
-    .preview-tabs {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .preview-tab {
-      height: 30px;
-      padding: 0 12px;
-      border-radius: var(--radius-xs);
-      border: 1px solid transparent;
-      background: transparent;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
-    .preview-tab.is-active {
-      background: var(--surface-2);
-      border-color: var(--border-strong);
-      color: var(--accent);
-    }
-    .preview-shell__status {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      padding: 2px 8px;
-      border-radius: var(--radius-xs);
-      background: var(--surface-0);
-      border: 1px solid var(--border-soft);
-      white-space: nowrap;
-      flex: none;
-    }
-    .preview-pane { display: none; padding: 16px; min-height: 316px; }
-    .preview-pane.is-active { display: grid; }
-    .scan-sim {
-      grid-template-columns: 168px minmax(0, 1fr);
-      gap: 14px;
-      align-items: stretch;
-    }
-    .scan-sim__side {
-      background: var(--surface-1);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-md);
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .scan-sim__lbl { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
-    .sim-btn {
-      width: 100%;
-      min-height: 32px;
-      padding: 0 10px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-strong);
-      background: var(--surface-2);
-      color: var(--text-primary);
-      font-size: 0.76rem;
-      font-weight: 700;
-      text-align: center;
-    }
-    .sim-btn.is-on {
-      background: var(--accent);
-      border-color: var(--accent-deep);
-      color: #FFFFFF;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
-    }
-    .sim-btn--foot { margin-top: auto; }
-    .scan-sim__stage {
-      background: var(--bg);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-md);
-      display: grid;
-      place-items: center;
-      padding: 16px;
-      position: relative;
-    }
-    .sim-sheet {
-      width: 124px;
-      height: 175px;
-      background: #FFFFFF;
-      border: 1px solid #CBD5E1;
-      border-radius: 4px;
-      box-shadow: var(--shadow-sm);
-      display: grid;
-      place-items: center;
-      padding: 10px;
-      transition: all 180ms var(--ease);
-    }
-    .sim-photo {
-      width: 100%;
-      height: 58%;
-      border-radius: 3px;
-      background: linear-gradient(180deg, #DBEAFE 0%, #EFF6FF 100%);
-      border: 1px dashed #60A5FA;
-      display: flex;
-      flex-direction: column;
       justify-content: center;
-      gap: 6px;
-      padding: 10px;
-      transition: all 180ms var(--ease);
+      gap: 12px;
+      margin-bottom: 22px;
     }
-    .sim-photo i {
-      display: block;
-      height: 5px;
-      border-radius: 99px;
-      background: #93C5FD;
-    }
-    .sim-photo i:nth-child(2) { width: 76%; }
-    .sim-photo i:nth-child(3) { width: 88%; }
-    .sim-sheet.is-a4 { padding: 0; }
-    .sim-sheet.is-a4 .sim-photo {
-      height: 100%;
-      border-style: solid;
-      border-color: var(--accent);
-      border-radius: 3px;
-    }
-    .sim-caption {
-      position: absolute;
-      bottom: 10px;
-      inset-inline-start: 12px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-    .list-sim {
-      grid-template-rows: auto 1fr;
-      gap: 10px;
-    }
-    .list-sim__head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
-    .list-sim__rows { display: grid; gap: 8px; }
-    .list-sim__row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-      border-radius: var(--radius);
-      background: var(--surface-1);
-      border: 1px solid var(--border-soft);
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-    .list-sim__meta { font-size: 0.74rem; color: var(--text-muted); }
-
-    /* Sections */
-    .section { padding: 56px 0; }
-    .section--alt {
-      background: var(--surface-1);
-      border-top: 1px solid var(--border-soft);
-      border-bottom: 1px solid var(--border-soft);
-    }
-    .section__head {
-      display: flex;
+    .hero__metrics {
+      display: inline-flex;
       flex-wrap: wrap;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-    .section__eyebrow {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-    .section__title { font-size: clamp(1.45rem, 2.6vw, 1.95rem); font-weight: 700; }
-    .section__sub { color: var(--text-secondary); max-width: 56ch; font-size: 0.94rem; margin-top: 6px; }
-
-    /* Bento 10-Tool Filterable Grid */
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .filter-pill {
-      height: 34px;
-      padding: 0 14px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-soft);
-      background: var(--surface-2);
-      color: var(--text-secondary);
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-    .filter-pill.is-active {
-      background: var(--accent);
-      border-color: var(--accent-deep);
-      color: #FFFFFF;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
-    }
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: center;
+      justify-content: center;
       gap: 14px;
-    }
-    .tool-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      box-shadow: var(--shadow-sm);
-      transition: border-color 140ms var(--ease);
-    }
-    .tool-card:hover { border-color: var(--border-strong); }
-    .tool-card--wide { grid-column: span 2; }
-    .tool-card[hidden] { display: none; }
-    .tool-card__top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .tool-card__title { font-size: 1.08rem; font-weight: 700; }
-    .tool-card__tag {
-      font-size: 0.72rem;
+      font-size: 0.86rem;
       font-weight: 700;
-      padding: 2px 9px;
-      border-radius: var(--radius-xs);
-      background: var(--surface-0);
-      border: 1px solid var(--border-soft);
-      color: var(--text-muted);
-      white-space: nowrap;
+      color: var(--text-secondary);
     }
-    .tool-card__tag--accent {
-      background: var(--accent-soft);
-      border-color: var(--border-glow);
-      color: var(--accent);
+    .hero__sep {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--border-strong);
     }
-    .tool-card__desc { font-size: 0.88rem; color: var(--text-secondary); }
 
-    /* Local Architecture Comparison */
-    .arch-grid {
+    /* Connected 5-Tab Rail + Studio Frame */
+    .studio-wrap {
+      position: relative;
+      z-index: 1;
+    }
+    .tab-rail {
       display: grid;
-      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr);
-      gap: 20px;
-      align-items: start;
-    }
-    .arch-pillars { display: grid; gap: 12px; }
-    .pillar {
-      background: var(--surface-2);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       border: 1px solid var(--border-soft);
-      border-radius: var(--radius-md);
-      padding: 16px;
-    }
-    .pillar__title { font-size: 1.02rem; font-weight: 700; margin-bottom: 4px; }
-    .pillar__desc { font-size: 0.86rem; color: var(--text-secondary); }
-    .table-box {
-      background: var(--surface-2);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-    .comp-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.88rem; }
-    .comp-table th, .comp-table td {
-      padding: 13px 16px;
-      border-bottom: 1px solid var(--border-soft);
-    }
-    .comp-table th { background: var(--surface-1); font-family: var(--font-display); font-size: 0.96rem; }
-    .comp-table th.is-local, .comp-table td.is-local { background: var(--accent-soft); font-weight: 700; }
-    .comp-table tr:last-child td { border-bottom: 0; }
-    .ok-text { color: var(--success); }
-    .bad-text { color: var(--danger); }
-
-    /* Install & SmartScreen Card */
-    .install-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      box-shadow: var(--shadow-md);
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-      gap: 24px;
-      align-items: center;
-    }
-    .install-card__sub { color: var(--text-secondary); margin: 10px 0 20px; font-size: 0.94rem; }
-    .install-card__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
-    .install-card__specs { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
-    .smartscreen-box {
+      border-bottom: 0;
+      border-radius: 12px 12px 0 0;
       background: var(--surface-1);
-      border: 1px solid var(--border-glow);
-      border-radius: var(--radius-md);
-      padding: 18px;
-    }
-    .smartscreen-box__head {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-display);
-      font-size: 1.02rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .smartscreen-box__head svg { width: 18px; height: 18px; color: var(--accent); flex: none; }
-    .smartscreen-box__body { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.7; }
-
-    /* FAQ */
-    .faq-list { display: grid; gap: 10px; max-width: 820px; }
-    .faq-item {
-      background: var(--surface-2);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-md);
       overflow: hidden;
     }
-    .faq-q {
-      width: 100%;
-      padding: 15px 18px;
-      background: transparent;
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 12px;
       border: 0;
+      border-left: 1px solid var(--border-soft);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: background-color 140ms var(--ease), color 140ms var(--ease);
+    }
+    .tab-btn:last-child { border-left: 0; }
+    .tab-btn:hover {
+      background: var(--surface-0);
       color: var(--text-primary);
+    }
+    .tab-btn[aria-selected="true"] {
+      background: var(--surface-2);
+      color: var(--accent-text);
+      box-shadow: inset 0 2px 0 var(--accent);
+    }
+
+    .studio-frame {
+      border: 1px solid var(--border-soft);
+      border-radius: 0 0 14px 14px;
+      background: var(--surface-2);
+      box-shadow: var(--shadow-frame);
+      overflow: hidden;
+    }
+    .studio-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      text-align: right;
-      font-size: 0.94rem;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border-soft);
+      background: var(--surface-1);
+    }
+    .studio-bar__path {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+    .studio-dots {
+      display: inline-flex;
+      gap: 6px;
+    }
+    .studio-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--border-strong);
+    }
+    .studio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--success-tint);
+      color: var(--success);
+      font-size: 0.78rem;
       font-weight: 700;
     }
-    .faq-q svg { width: 16px; height: 16px; color: var(--text-muted); transition: transform 160ms var(--ease); flex: none; }
-    .faq-item.is-open .faq-q svg { transform: rotate(180deg); color: var(--accent); }
-    .faq-a {
+    .studio-panel {
       display: none;
-      padding: 0 18px 16px;
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      line-height: 1.75;
+      padding: 24px;
+      min-height: 330px;
     }
-    .faq-item.is-open .faq-a { display: block; }
+    .studio-panel.is-active { display: block; }
 
-    /* Footer */
-    .footer {
-      border-top: 1px solid var(--border-soft);
+    /* Interactive Scan / A4 Stage */
+    .scan-stage {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+    .scan-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px;
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
       background: var(--surface-1);
-      padding: 24px 0;
+    }
+    .scan-controls__label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .ctrl-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      background: var(--surface-2);
+      color: var(--text-primary);
       font-size: 0.84rem;
-      color: var(--text-muted);
+      font-weight: 700;
+      transition: border-color 140ms var(--ease), background-color 140ms var(--ease), color 140ms var(--ease);
+    }
+    .ctrl-btn[aria-pressed="true"] {
+      background: var(--accent-tint);
+      border-color: var(--accent);
+      color: var(--accent-text);
+    }
+    .ctrl-btn__state {
+      font-size: 0.75rem;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--surface-1);
+      color: var(--text-secondary);
+    }
+    .ctrl-btn[aria-pressed="true"] .ctrl-btn__state {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+
+    .scan-canvas {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 20px;
+      padding: 24px;
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      background-color: var(--surface-1);
+      background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+    .doc-source {
+      width: 170px;
+      height: 120px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1px solid #CBD5E1;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+      transform: rotate(-7deg);
+      transition: transform 240ms var(--ease), border-color 240ms var(--ease);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .doc-source.is-edged {
+      border: 2px solid var(--accent);
+      transform: rotate(-2deg);
+    }
+    .doc-lines { display: flex; flex-direction: column; gap: 6px; }
+    .doc-line {
+      height: 6px;
+      border-radius: 3px;
+      background: #CBD5E1;
+    }
+    .doc-line--short { width: 62%; }
+    .doc-line--accent { width: 45%; background: #93C5FD; }
+    .doc-meta {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .a4-sheet {
+      width: 158px;
+      height: 224px;
+      padding: 16px;
+      border-radius: 6px;
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1px solid #CBD5E1;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.10);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: padding 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .a4-sheet__inner {
+      flex: 1;
+      border: 1px dashed #94A3B8;
+      border-radius: 4px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #F8FAFC;
+      transition: background-color 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .a4-sheet.is-stretched {
+      padding: 8px;
+      border-color: var(--accent);
+    }
+    .a4-sheet.is-stretched .a4-sheet__inner {
+      border-style: solid;
+      border-color: var(--accent);
+      background: #EFF6FF;
+    }
+    .a4-sheet__dim {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #1D4ED8;
+      margin-top: 8px;
+    }
+
+    /* Other Tab Previews (Merge / Edit / Compress / Crop) */
+    .mini-board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .mini-pane {
+      padding: 18px;
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      background: var(--surface-1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .mini-pane__title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .mini-pane__meta {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .split-stage {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 20px;
+    }
+    .edit-preview {
+      padding: 24px;
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      background: var(--surface-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .edit-sheet {
+      width: 100%;
+      max-width: 440px;
+      padding: 22px;
+      border-radius: 8px;
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1px solid #CBD5E1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .stamp-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border: 2px solid #047857;
+      border-radius: 6px;
+      color: #047857;
+      font-weight: 700;
+      font-size: 0.85rem;
+      width: fit-content;
+      transform: rotate(-4deg);
+    }
+
+    /* 3. Two-Column Architectural Feature Showcase */
+    .section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .two-col-frame {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+    .two-col-cell {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .two-col-cell:first-child {
+      border-left: 1px solid var(--border-soft);
+    }
+    .two-tone {
+      font-size: clamp(1.45rem, 2.5vw, 1.95rem);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .two-tone__muted {
+      display: block;
+      color: var(--text-secondary);
+    }
+    .drafting-box {
+      padding: 24px;
+      min-height: 232px;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      background-color: var(--surface-1);
+      background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1px);
+      background-size: 16px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .mini-skew-card {
+      position: relative;
+      width: 136px;
+      height: 98px;
+      padding: 12px;
+      border-radius: 6px;
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1.5px solid var(--accent);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+      transform: rotate(-6deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .crop-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 1.5px solid var(--accent);
+    }
+    .crop-dot--tl { top: -4px; left: -4px; }
+    .crop-dot--tr { top: -4px; right: -4px; }
+    .crop-dot--bl { bottom: -4px; left: -4px; }
+    .crop-dot--br { bottom: -4px; right: -4px; }
+    .mini-a4-wire {
+      width: 112px;
+      height: 156px;
+      padding: 8px;
+      border-radius: 6px;
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1.5px solid var(--accent);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.09);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mini-a4-fill {
+      flex: 1;
+      border-radius: 4px;
+      background: #EFF6FF;
+      border: 1px solid #93C5FD;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mini-a4-tick {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #1D4ED8;
+      text-align: center;
+    }
+    .cascade-stack {
+      position: relative;
+      width: 126px;
+      height: 152px;
+    }
+    .cascade-sheet {
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      background: #FFFFFF;
+      border: 1px solid #93C5FD;
+    }
+    .cascade-sheet--back {
+      transform: translate(-10px, -8px);
+      background: #EFF6FF;
+    }
+    .cascade-sheet--mid {
+      transform: translate(-5px, -4px);
+      background: #F8FAFC;
+    }
+    .cascade-sheet--front {
+      padding: 10px;
+      border: 1.5px solid var(--accent);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cascade-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #FFFFFF;
+      text-align: center;
+    }
+    .draft-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-soft);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* 4. 10-Tool Architectural Matrix (pw-2-bento style) */
+    .bento-frame {
+      display: grid;
+      grid-template-columns: 32% 68%;
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+    .bento-side {
+      padding: 32px;
+      border-left: 1px solid var(--border-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .meta-list {
+      border-top: 1px solid var(--border-soft);
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 0.88rem;
+    }
+    .meta-row span:first-child { color: var(--text-secondary); }
+    .meta-row strong { color: var(--text-primary); }
+
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--border-soft);
+    }
+    .tool-cell {
+      border: 0;
+      text-align: right;
+      background: var(--surface-2);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 146px;
+      transition: background-color 140ms var(--ease);
+    }
+    .tool-cell:hover {
+      background: var(--accent-tint);
+    }
+    .tool-cell--primary {
+      background: var(--accent-tint);
+    }
+    .tool-cell__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .tool-cell__badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+    .tool-cell__icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      background: var(--surface-1);
+      color: var(--accent-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tool-cell__title {
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .tool-cell__desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* 5. Local Pipeline & Latency */
+    .bench-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .bench-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .bench-row__head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .bench-track {
+      height: 12px;
+      border-radius: 999px;
+      background: var(--surface-1);
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+    }
+    .bench-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+    .bench-fill--local { width: 8%; background: var(--accent); }
+    .bench-fill--cloud { width: 92%; background: var(--border-strong); }
+
+    .pipe-nodes {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+    }
+    .pipe-node {
+      flex: 1;
+      padding: 16px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: var(--surface-2);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .pipe-arrow {
+      color: var(--accent-text);
+      flex: none;
+    }
+
+    /* 6. SmartScreen + FAQ + Closing CTA + Footer */
+    .steps-rail {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      background: var(--surface-2);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .step-cell {
+      padding: 24px;
+      border-left: 1px solid var(--border-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .step-cell:last-child { border-left: 0; }
+    .step-cell__title {
+      font-size: 1.08rem;
+      font-weight: 700;
+    }
+    .ui-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--surface-1);
+      border: 1px solid var(--border-strong);
+      font-size: 0.84rem;
+      font-weight: 700;
+      width: fit-content;
+    }
+    .ui-chip--accent {
+      background: var(--accent-tint);
+      border-color: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .faq-list {
+      padding: 6px 22px;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      background: var(--surface-2);
+      margin-bottom: 40px;
+      overflow: hidden;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .faq-item:last-child { border-bottom: 0; }
+    .faq-item summary {
+      list-style: none;
+      padding: 16px 0;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item__body {
+      padding: 0 0 16px;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+
+    .closing-band {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 32px;
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      background: var(--surface-1);
+    }
+
+    .footer {
+      padding: 28px 0;
+      background: var(--bg);
     }
     .footer__inner {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 16px;
+      font-size: 0.86rem;
+      color: var(--text-secondary);
     }
     .footer__links {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
+      gap: 20px;
+      font-weight: 700;
     }
-    .footer__links a:hover { color: var(--accent); }
+    .footer__links a:hover { color: var(--text-primary); }
 
-    @media (max-width: 960px) {
-      .hero__grid, .arch-grid, .install-card { grid-template-columns: 1fr; }
-      .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .tool-card--wide { grid-column: span 2; }
+    @media (max-width: 980px) {
+      .bento-frame { grid-template-columns: 1fr; }
+      .bento-side { border-left: 0; border-bottom: 1px solid var(--border-soft); }
+      .matrix-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .two-col-frame { grid-template-columns: 1fr; }
+      .two-col-cell:first-child { border-left: 0; border-bottom: 1px solid var(--border-soft); }
+      .scan-stage, .split-stage { grid-template-columns: 1fr; }
     }
-    @media (max-width: 680px) {
-      .cmdbar__nav { display: none; }
-      .tools-grid { grid-template-columns: 1fr; }
-      .tool-card--wide { grid-column: span 1; }
-      .scan-sim { grid-template-columns: 1fr; }
-      .hero__cta .btn, .install-card__actions .btn { width: 100%; }
+
+    @media (max-width: 720px) {
+      .container { padding: 0 16px; }
+      .nav, .hero__waves { display: none; }
+      .topbar__inner { gap: 8px; min-height: 58px; }
+      .brand { gap: 8px; min-width: 0; }
+      .brand__name { font-size: 1.05rem; white-space: nowrap; }
+      .brand__ver { display: none; }
+      .topbar__actions { gap: 6px; flex: none; }
+      .topbar .btn--sm { padding: 6px 10px; font-size: 0.78rem; min-height: 34px; white-space: nowrap; }
+      .theme-switch button { padding: 4px 8px; font-size: 0.75rem; }
+      .hero { padding-top: 36px; padding-bottom: 40px; }
+      .hero__tile { width: 32px; height: 32px; margin: 0 4px; border-radius: 8px; }
+      .hero__tile svg { width: 20px; height: 20px; }
+      .hero__metrics { gap: 8px 14px; }
+      .hero__sep { display: none; }
+      .tab-rail {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .tab-btn { border-bottom: 1px solid var(--border-soft); font-size: 0.82rem; padding: 12px 8px; }
+      .tab-btn:last-child { grid-column: 1 / -1; border-bottom: 0; }
+      .studio-bar { flex-wrap: wrap; padding: 12px 14px; }
+      .studio-dots { display: none; }
+      .studio-panel { padding: 16px; }
+      .two-col-cell, .bento-side, .closing-band { padding: 22px 18px; }
+      .steps-rail { grid-template-columns: 1fr; }
+      .step-cell { border-left: 0; border-bottom: 1px solid var(--border-soft); }
+      .step-cell:last-child { border-bottom: 0; }
+      .mini-board { grid-template-columns: 1fr; }
+      .pipe-nodes { flex-direction: column; }
+      .pipe-nodes .pipe-arrow, .scan-canvas .pipe-arrow { transform: rotate(-90deg); }
+      .scan-canvas { flex-direction: column; padding: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="cmdbar">
-    <div class="wrap cmdbar__inner">
-      <a class="brand" href="#workspace">
-        <img class="brand__mark" src="branding/app-icon-192.png" alt="رزمة Rozma" width="36" height="36" />
-        <span class="brand__text">
-          <span class="brand__ar">رزمة</span>
-          <span class="brand__en">Rozma</span>
-        </span>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="#hero">
+        <img class="brand__mark" src="branding/app-icon-192.png" alt="رزمة" width="32" height="32" />
+        <span class="brand__name">رزمة</span>
+        <span class="brand__ver num">v1.0.26</span>
       </a>
 
-      <nav aria-label="التنقل السريع">
-        <ul class="cmdbar__nav">
-          <li><a class="cmdbar__link" href="#workspace">مساحة العمل</a></li>
-          <li><a class="cmdbar__link" href="#tools">الأدوات</a></li>
-          <li><a class="cmdbar__link" href="#architecture">البنية المحلية</a></li>
-          <li><a class="cmdbar__link" href="#install">التثبيت</a></li>
-          <li><a class="cmdbar__link" href="#faq">الأسئلة الشائعة</a></li>
-        </ul>
+      <nav class="nav" aria-label="التنقل الرئيسي">
+        <a href="#tools">الأدوات</a>
+        <a href="#studio">المعاينة</a>
+        <a href="#install">التثبيت</a>
       </nav>
 
-      <div class="cmdbar__actions">
-        <button id="theme-toggle" class="icon-btn" type="button" aria-label="تبديل المظهر الفاتح والداكن">
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        </button>
-        <a id="nav-dl" class="btn btn--primary btn--sm" href="https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe" download>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <div class="topbar__actions">
+        <div class="theme-switch" role="group" aria-label="مظهر الصفحة">
+          <button type="button" data-theme-pick="sheet" aria-pressed="true">فاتح</button>
+          <button type="button" data-theme-pick="blueprint" aria-pressed="false">داكن</button>
+        </div>
+        <a class="btn btn--primary btn--sm" href="https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe" download>
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
           <span>تنزيل لويندوز</span>
         </a>
       </div>
@@ -770,440 +1179,663 @@
   </header>
 
   <main>
-    <!-- Split Architectural Hero + Interactive Desktop Workspace Preview -->
-    <section id="workspace" class="hero">
-      <div class="wrap hero__grid">
-        <div>
-          <div class="hero__badge">
-            <span class="hero__dot" aria-hidden="true"></span>
-            <span>تطبيق سطح مكتب محلي على ويندوز • <span class="num">10</span> أدوات في واجهة واحدة</span>
-          </div>
-          <h1 class="hero__title">كل أدوات تجهيز الـ<span>PDF</span> والصور لطباعة أسرع على جهازك</h1>
-          <p class="hero__sub">
-            تطبيق خفيف مبني لمعالجة ملفات العملاء في المكتبات ومراكز الطباعة والمكاتب فورًا عبر معالج جهازك، دون رفع المستندات إلى أي سحابة خارجية.
-          </p>
+    <section id="hero" class="hero">
+      <svg class="hero__backdrop" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+        <defs>
+          <pattern id="pw-dots" width="18" height="18" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.35" fill="var(--dot-color)" />
+          </pattern>
+          <radialGradient id="pw-fade" cx="50%" cy="32%" r="52%">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1" />
+            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+          </radialGradient>
+          <mask id="pw-mask">
+            <rect width="1200" height="420" fill="url(#pw-fade)" />
+          </mask>
+        </defs>
+        <rect width="1200" height="420" fill="url(#pw-dots)" mask="url(#pw-mask)" />
+      </svg>
+
+      <div class="hero__waves" aria-hidden="true">
+        <div class="hero__wave-col">
+          <span class="hero__wave-bar" style="height:44px"></span>
+          <span class="hero__wave-bar" style="height:84px"></span>
+          <span class="hero__wave-bar" style="height:62px"></span>
+          <span class="hero__wave-bar" style="height:108px"></span>
+          <span class="hero__wave-bar" style="height:52px"></span>
+        </div>
+        <div class="hero__wave-col">
+          <span class="hero__wave-bar" style="height:56px"></span>
+          <span class="hero__wave-bar" style="height:104px"></span>
+          <span class="hero__wave-bar" style="height:68px"></span>
+          <span class="hero__wave-bar" style="height:88px"></span>
+          <span class="hero__wave-bar" style="height:48px"></span>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="hero__head">
+          <h1 class="hero__title">
+            تجهيز الصور
+            <span class="hero__tile" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+                <rect x="6" y="6" width="18" height="22" rx="3" fill="#93C5FD" />
+                <path d="M9 4h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5" />
+                <rect x="5" y="16" width="22" height="5" rx="2" fill="#2563EB" />
+              </svg>
+            </span>
+            والملفات
+            <br />
+            للطباعة <span class="num">A4</span> <span class="hero__accent">في ثوانٍ.</span>
+          </h1>
+
+          <p class="hero__sub">عدّل صور الموبايل لتملأ ورقة A4، التقط الحواف تلقائياً، ومعك 9 أدوات PDF مدمجة.</p>
+
           <div class="hero__cta">
-            <a class="btn btn--primary btn--lg" href="https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe" download>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span>تنزيل Rozma-Setup.exe</span>
+            <a class="btn btn--primary" href="https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe" download>
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              <span>تنزيل رزمة لويندوز</span>
             </a>
-            <a class="btn btn--lg" href="#tools">استعراض الأدوات</a>
+            <a class="btn" href="#studio">
+              <span>معاينة مساحة العمل</span>
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14m0 0-5-5m5 5 5-5"/></svg>
+            </a>
           </div>
-          <div class="hero__meta">
-            <span class="hero__meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Windows 10 / 11 (64-bit) — مثبّت رسمي</span>
-            </span>
-            <span class="hero__meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>معالجة محلية 100% — بلا رفع ملفات</span>
-            </span>
-            <span class="hero__meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-              <span>تحديثات خلفية تلقائية</span>
-            </span>
+
+          <div class="hero__metrics">
+            <span>ملء <span class="num">A4</span> فوري</span>
+            <span class="hero__sep" aria-hidden="true"></span>
+            <span>تحديد الحواف التلقائي</span>
+            <span class="hero__sep" aria-hidden="true"></span>
+            <span class="num">Windows 10 / 11</span>
+            <span class="hero__sep" aria-hidden="true"></span>
+            <span><span class="num">+9</span> أدوات مدمجة</span>
           </div>
         </div>
 
-        <div class="preview-shell" aria-label="معاينة تفاعلية لمساحة عمل رزمة">
-          <div class="preview-shell__bar">
-            <div class="preview-tabs" role="tablist">
-              <button class="preview-tab is-active" type="button" data-pane="scan">صور ← PDF / زي A4</button>
-              <button class="preview-tab" type="button" data-pane="merge">ترتيب ودمج</button>
-              <button class="preview-tab" type="button" data-pane="numbers">ترقيم عربي</button>
-            </div>
-            <span class="preview-shell__status">معالجة محلية</span>
+        <div id="studio" class="studio-wrap">
+          <div class="tab-rail" role="tablist" aria-label="استعراض أدوات رزمة">
+            <button type="button" class="tab-btn" role="tab" aria-selected="true" data-tab="scan">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
+              <span>صور ← PDF / زي A4</span>
+            </button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="merge">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="11" height="14" rx="2"/><path d="M9 18v2a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/></svg>
+              <span>دمج وترتيب</span>
+            </button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="edit">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              <span>تعديل وختم</span>
+            </button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="compress">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7"/></svg>
+              <span>ضغط وترقيم عربي</span>
+            </button>
+            <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="crop">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+              <span>قص وتحويل</span>
+            </button>
           </div>
 
-          <div class="preview-pane scan-sim is-active" data-pane-body="scan">
-            <aside class="scan-sim__side">
-              <span class="scan-sim__lbl">الورقة والحواف</span>
-              <button id="sim-a4-toggle" class="sim-btn is-on" type="button">زي A4 (تمديد طولي)</button>
-              <button id="sim-edges-toggle" class="sim-btn" type="button">كشف الحواف اختياريًا</button>
-              <button id="sim-apply-all" class="sim-btn sim-btn--foot" type="button">تطبيق على كل الصفحات</button>
-            </aside>
-            <div class="scan-sim__stage">
-              <div id="sim-sheet" class="sim-sheet is-a4">
-                <div class="sim-photo"><i></i><i></i><i></i></div>
+          <div class="studio-frame">
+            <div class="studio-bar">
+              <div class="studio-bar__path">
+                <span class="studio-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span>رزمة</span>
+                <span>/</span>
+                <span id="studio-breadcrumb">صور ← PDF · زي A4</span>
               </div>
-              <span id="sim-caption" class="sim-caption">A4 طولي ممتد • <span class="num">595 × 842 pt</span></span>
+              <span class="studio-badge">محلي 100% — بدون حدود</span>
             </div>
-          </div>
 
-          <div class="preview-pane list-sim" data-pane-body="merge">
-            <div class="list-sim__head">
-              <span>طابور دمج وتنظيم الملفات</span>
-              <span class="num">3 ملفات • 24 صفحة</span>
-            </div>
-            <div class="list-sim__rows">
-              <div class="list-sim__row"><span>1. مذكرة_المراجعة_الأولى.pdf</span><span class="list-sim__meta num">12 صفحة • A4</span></div>
-              <div class="list-sim__row"><span>2. ملحق_الأسئلة_المجاب.pdf</span><span class="list-sim__meta num">8 صفحات • A4</span></div>
-              <div class="list-sim__row"><span>3. غلاف_الطباعة_النهائي.pdf</span><span class="list-sim__meta num">4 صفحات • A4</span></div>
-            </div>
-          </div>
+            <!-- Panel 1: Scan / A4 -->
+            <div class="studio-panel is-active" data-panel="scan">
+              <div class="scan-stage">
+                <div class="scan-controls">
+                  <div class="scan-controls__label">أوامر الشريط الجانبي</div>
+                  <button type="button" id="demo-a4-btn" class="ctrl-btn" aria-pressed="true">
+                    <span>زي A4</span>
+                    <span class="ctrl-btn__state" id="demo-a4-state">مفعّل</span>
+                  </button>
+                  <button type="button" id="demo-edge-btn" class="ctrl-btn" aria-pressed="false">
+                    <span>اكتشاف الحواف</span>
+                    <span class="ctrl-btn__state" id="demo-edge-state">اختياري</span>
+                  </button>
+                  <button type="button" id="demo-all-btn" class="ctrl-btn" aria-pressed="false">
+                    <span>تطبيق على الكل</span>
+                    <span class="ctrl-btn__state" id="demo-all-state">صفحة 1</span>
+                  </button>
+                </div>
 
-          <div class="preview-pane list-sim" data-pane-body="numbers">
-            <div class="list-sim__head">
-              <span>معاينة الترقيم العربي الهندي / اللاتيني</span>
-              <span class="num">1 → 24</span>
+                <div class="scan-canvas">
+                  <div id="demo-source-card" class="doc-source">
+                    <div class="doc-lines">
+                      <div class="doc-line doc-line--accent"></div>
+                      <div class="doc-line"></div>
+                      <div class="doc-line doc-line--short"></div>
+                    </div>
+                    <div class="doc-meta">صورة هاتف عرضية</div>
+                  </div>
+
+                  <svg class="icon pipe-arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m0 0 5-5m-5 5 5 5"/></svg>
+
+                  <div>
+                    <div id="demo-a4-sheet" class="a4-sheet is-stretched">
+                      <div class="a4-sheet__inner">
+                        <div class="doc-lines">
+                          <div class="doc-line doc-line--accent"></div>
+                          <div class="doc-line"></div>
+                          <div class="doc-line"></div>
+                          <div class="doc-line doc-line--short"></div>
+                        </div>
+                        <div class="doc-meta" id="demo-a4-label">ملء الورقة الطولية بالكامل</div>
+                      </div>
+                    </div>
+                    <div class="a4-sheet__dim">
+                      <span>A4 طولي</span>
+                      <span class="num">210 × 297 mm</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="list-sim__rows">
-              <div class="list-sim__row"><span>النمط المختار</span><span class="list-sim__meta">صفحة ١ من ٢٤ (أرقام عربية هندية)</span></div>
-              <div class="list-sim__row"><span>الموضع والهامش</span><span class="list-sim__meta num">أسفل المنتصف • 18 pt</span></div>
-              <div class="list-sim__row"><span>الخط المدمج</span><span class="list-sim__meta">Amiri — حاد في الطباعة الليزرية</span></div>
+
+            <!-- Panel 2: Merge & Organize -->
+            <div class="studio-panel" data-panel="merge">
+              <div class="mini-board">
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">1. فهرس المشروع.pdf</div>
+                    <div class="mini-pane__meta"><span class="num">4</span> صفحات · <span class="num">A4</span></div>
+                  </div>
+                  <div class="draft-pill">سحب للترتيب الفوري</div>
+                </div>
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">2. المرفقات الموقّعة.pdf</div>
+                    <div class="mini-pane__meta"><span class="num">8</span> صفحات · تدوير <span class="num">90°</span></div>
+                  </div>
+                  <div class="draft-pill">إدراج صور وسط الملف</div>
+                </div>
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">الناتج المجمّع</div>
+                    <div class="mini-pane__meta"><span class="num">12</span> صفحة جاهزة للطباعة</div>
+                  </div>
+                  <div class="ui-chip ui-chip--accent">تصدير محلي فوري</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 3: Edit & Stamp -->
+            <div class="studio-panel" data-panel="edit">
+              <div class="split-stage">
+                <div class="scan-controls">
+                  <div class="scan-controls__label">أدوات الصفحة</div>
+                  <div class="ctrl-btn" aria-pressed="true"><span>نص عربي RTL</span><span class="ctrl-btn__state">نشط</span></div>
+                  <div class="ctrl-btn" aria-pressed="true"><span>ختم وتوقيع</span><span class="ctrl-btn__state">نشط</span></div>
+                  <div class="ctrl-btn" aria-pressed="false"><span>تسطيح للحفظ</span><span class="ctrl-btn__state">جاهز</span></div>
+                </div>
+                <div class="edit-preview">
+                  <div class="edit-sheet">
+                    <div class="doc-lines">
+                      <div class="doc-line doc-line--accent"></div>
+                      <div class="doc-line"></div>
+                      <div class="doc-line doc-line--short"></div>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;">
+                      <span class="stamp-chip">معتمد للطباعة</span>
+                      <svg width="110" height="32" viewBox="0 0 110 32" fill="none" aria-hidden="true">
+                        <path d="M6 22c14-16 24-12 28 0 6 12 18-18 32-8 10 8 22 4 38-6" stroke="#1D4ED8" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 4: Compress & Arabic Numbering -->
+            <div class="studio-panel" data-panel="compress">
+              <div class="mini-board">
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">ضغط 4 مستويات</div>
+                    <div class="mini-pane__meta">خفيف · متوازن · قوي · أقصى ضغط</div>
+                  </div>
+                  <div class="draft-pill"><span class="num">18.4 MB → 2.1 MB</span></div>
+                </div>
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">ترقيم عربي تلقائي</div>
+                    <div class="mini-pane__meta">صفحة <span class="num">1 / 20</span> · هامش مخصص</div>
+                  </div>
+                  <div class="draft-pill">إخراج فائق الدقة</div>
+                </div>
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">تحويل رمادي اختياري</div>
+                    <div class="mini-pane__meta">توفير الحبر لطباعة المذكرات</div>
+                  </div>
+                  <div class="ui-chip ui-chip--accent">جاهز للمطبعة</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 5: Crop & Extract -->
+            <div class="studio-panel" data-panel="crop">
+              <div class="mini-board">
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">قص بصري دقيق</div>
+                    <div class="mini-pane__meta">قص الصفحة الحالية أو كل الصفحات</div>
+                  </div>
+                  <div class="draft-pill"><span class="num">CropBox / MediaBox</span></div>
+                </div>
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">PDF ← صور</div>
+                    <div class="mini-pane__meta">تصدير إلى مجلد أو أرشيف <span class="num">ZIP</span></div>
+                  </div>
+                  <div class="draft-pill"><span class="num">PNG / JPG</span></div>
+                </div>
+                <div class="mini-pane">
+                  <div>
+                    <div class="mini-pane__title">استخراج الصور الأصلية</div>
+                    <div class="mini-pane__meta">بدون إعادة ضغط أو فقدان دقة</div>
+                  </div>
+                  <div class="ui-chip ui-chip--accent"><span class="num">JPG / JP2 / PNG</span></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Bento 10-Tool Filterable Grid -->
+    <!-- 3. Two-Column Architectural Feature Showcase -->
+    <section id="showcase" class="section">
+      <div class="container">
+        <div class="two-col-frame">
+          <div class="two-col-cell">
+            <h2 class="two-tone">
+              ضبط <span class="num">A4</span> التلقائي.
+              <span class="two-tone__muted">بدون قص أو تدوير يدوي.</span>
+            </h2>
+            <div class="drafting-box">
+              <div class="mini-skew-card">
+                <span class="crop-dot crop-dot--tl" aria-hidden="true"></span>
+                <span class="crop-dot crop-dot--tr" aria-hidden="true"></span>
+                <span class="crop-dot crop-dot--bl" aria-hidden="true"></span>
+                <span class="crop-dot crop-dot--br" aria-hidden="true"></span>
+                <div class="doc-lines">
+                  <div class="doc-line doc-line--accent"></div>
+                  <div class="doc-line"></div>
+                  <div class="doc-line doc-line--short"></div>
+                </div>
+                <div class="doc-meta">صورة عرضية</div>
+              </div>
+
+              <svg class="icon pipe-arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m0 0 5-5m-5 5 5 5"/></svg>
+
+              <div class="mini-a4-wire">
+                <div class="mini-a4-fill">
+                  <div class="doc-lines">
+                    <div class="doc-line doc-line--accent"></div>
+                    <div class="doc-line"></div>
+                    <div class="doc-line"></div>
+                    <div class="doc-line doc-line--short"></div>
+                  </div>
+                  <div class="mini-a4-tick num">210 × 297 mm</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col-cell">
+            <h2 class="two-tone">
+              حواف واضحة وتطبيق للكل.
+              <span class="two-tone__muted">جهّز رزمة ورق بضغطة واحدة.</span>
+            </h2>
+            <div class="drafting-box">
+              <div class="mini-skew-card">
+                <span class="crop-dot crop-dot--tl" aria-hidden="true"></span>
+                <span class="crop-dot crop-dot--tr" aria-hidden="true"></span>
+                <span class="crop-dot crop-dot--bl" aria-hidden="true"></span>
+                <span class="crop-dot crop-dot--br" aria-hidden="true"></span>
+                <div class="doc-lines">
+                  <div class="doc-line doc-line--accent"></div>
+                  <div class="doc-line"></div>
+                </div>
+                <div class="doc-meta">التقاط الحواف</div>
+              </div>
+
+              <svg class="icon pipe-arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m0 0 5-5m-5 5 5 5"/></svg>
+
+              <div class="cascade-stack">
+                <div class="cascade-sheet cascade-sheet--back" aria-hidden="true"></div>
+                <div class="cascade-sheet cascade-sheet--mid" aria-hidden="true"></div>
+                <div class="cascade-sheet cascade-sheet--front">
+                  <div class="doc-lines">
+                    <div class="doc-line doc-line--accent"></div>
+                    <div class="doc-line"></div>
+                    <div class="doc-line doc-line--short"></div>
+                  </div>
+                  <div class="cascade-tag">تطبيق على الكل</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 10-Tool Architectural Matrix -->
     <section id="tools" class="section">
-      <div class="wrap">
-        <div class="section__head">
-          <div>
-            <span class="section__eyebrow">مجموعة الأدوات الكاملة</span>
-            <h2 class="section__title">10 أدوات متخصصة في برنامج واحد</h2>
-            <p class="section__sub">تغطي دورة تجهيز الملفات اليومية من استلام صور الموبايل والواتساب حتى الطباعة النهائية.</p>
-          </div>
-          <div class="filter-bar" role="tablist" aria-label="تصفية الأدوات">
-            <button class="filter-pill is-active" type="button" data-filter="all">الكل (<span class="num">10</span>)</button>
-            <button class="filter-pill" type="button" data-filter="scan">المسح والصور</button>
-            <button class="filter-pill" type="button" data-filter="organize">التنظيم والصفحات</button>
-            <button class="filter-pill" type="button" data-filter="edit">التحرير والإخراج</button>
-          </div>
-        </div>
-
-        <div class="tools-grid">
-          <article class="tool-card tool-card--wide" data-cat="scan">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">صور ← PDF (تجهيز لقطات الموبايل والواتساب)</h3>
-              <span class="tool-card__tag tool-card__tag--accent">زي A4 + كشف الحواف اختياريًا</span>
+      <div class="container">
+        <div class="bento-frame">
+          <div class="bento-side">
+            <div>
+              <h2 class="two-tone">
+                تجهيز الطباعة أولاً.
+                <span class="two-tone__muted">وأدوات PDF مدمجة فوق البيعة.</span>
+              </h2>
             </div>
-            <p class="tool-card__desc">
-              تفتح الصور بحدودها الكاملة افتراضيًا دون قص مفاجئ، مع زر <strong>زي A4</strong> لتمديد أي صورة وتدوير الصور العرضية لطولي تلقائيًا، وخيار <strong>اكتشاف أطراف الصورة</strong> عند الحاجة، و3 أنماط معالجة (ملوّن، رمادي، الأصل) مع زر تطبيق على كل الصفحات.
-            </p>
-          </article>
 
-          <article class="tool-card" data-cat="scan">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">PDF ← صور</h3>
-              <span class="tool-card__tag">PNG / JPG</span>
-            </div>
-            <p class="tool-card__desc">تحويل صفحات الـPDF إلى صور عالية الوضوح مع تصدير فردي أو مجلد مرتب للمطبعة أو المشاركة.</p>
-          </article>
-
-          <article class="tool-card" data-cat="scan">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">استخراج الصور الأصلية</h3>
-              <span class="tool-card__tag">دون إعادة ضغط</span>
-            </div>
-            <p class="tool-card__desc">سحب الصور المضمّنة داخل ملفات PDF بجودتها الأصلية الكاملة خلال ثوانٍ.</p>
-          </article>
-
-          <article class="tool-card" data-cat="organize">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">دمج الملفات</h3>
-              <span class="tool-card__tag">سحب وإفلات</span>
-            </div>
-            <p class="tool-card__desc">تجميع عدة ملفات PDF في مستند واحد مرتب مع معاينة فورية وترتيب ذكي للملفات.</p>
-          </article>
-
-          <article class="tool-card" data-cat="organize">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">ترتيب الصفحات</h3>
-              <span class="tool-card__tag">تدوير وحذف</span>
-            </div>
-            <p class="tool-card__desc">إعادة ترتيب الصفحات بالسحب، تدوير صفحات محددة 90°، أو حذف الصفحات الزائدة بسهولة.</p>
-          </article>
-
-          <article class="tool-card" data-cat="organize">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">تقسيم المستند</h3>
-              <span class="tool-card__tag">نطاقات مرنة</span>
-            </div>
-            <p class="tool-card__desc">استخراج فصول أو صفحات بعينها في ملفات مستقلة أو أرشيف ZIP بأسماء عربية واضحة.</p>
-          </article>
-
-          <article class="tool-card" data-cat="edit">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">قص هوامش الصفحات</h3>
-              <span class="tool-card__tag">قص بصري</span>
-            </div>
-            <p class="tool-card__desc">إزالة الحواف البيضاء أو الإطارات الزائدة من صفحة واحدة أو كامل صفحات المستند قبل الطباعة.</p>
-          </article>
-
-          <article class="tool-card" data-cat="edit">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">ترقيم الصفحات</h3>
-              <span class="tool-card__tag">عربي هندي / لاتيني</span>
-            </div>
-            <p class="tool-card__desc">إضافة أرقام الصفحات بالعربية الهندية (١، ٢، ٣) أو الأرقام القياسية مع التحكم في الموضع والحجم.</p>
-          </article>
-
-          <article class="tool-card" data-cat="edit">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">ضغط الملفات</h3>
-              <span class="tool-card__tag">تقليل الحجم</span>
-            </div>
-            <p class="tool-card__desc">تصغير حجم ملفات الـPDF الكبيرة مع موازنة ذكية بين دقة النصوص وحجم الملف.</p>
-          </article>
-
-          <article class="tool-card tool-card--wide" data-cat="edit">
-            <div class="tool-card__top">
-              <h3 class="tool-card__title">تعديل PDF</h3>
-              <span class="tool-card__tag">نصوص، رسم، توقيع</span>
-            </div>
-            <p class="tool-card__desc">إضافة نصوص عربية واضحة، أشكال، تمويه (Redaction) أو توقيع فوق أي صفحة مع تسطيح آمن عند التصدير.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Local WebAssembly Architecture & Comparison -->
-    <section id="architecture" class="section section--alt">
-      <div class="wrap">
-        <div class="section__head">
-          <div>
-            <span class="section__eyebrow">البنية المحلية</span>
-            <h2 class="section__title">معالجة فورية محلية دون انتظار رفع أو تحميل</h2>
-            <p class="section__sub">يعمل محليًا على معالج جهازك عبر Electron وWebAssembly دون إرسال مستنداتك لأي خادم، وهو متاح للتنزيل والتجربة مباشرة دون حدود سحابية.</p>
-          </div>
-        </div>
-
-        <div class="arch-grid">
-          <div class="arch-pillars">
-            <div class="pillar">
-              <h3 class="pillar__title">تشغيل محلي على معالجك</h3>
-              <p class="pillar__desc">تبقى البطاقات الشخصية والعقود والمذكرات على جهاز المكتبة فقط، ولا يتطلب التطبيق اتصالًا بالإنترنت أثناء التعديل أو التصدير.</p>
-            </div>
-            <div class="pillar">
-              <h3 class="pillar__title">انعدام زمن الرفع والتنزيل</h3>
-              <p class="pillar__desc">ملفات الـ100 ميجابايت تفتح وتُعالج مباشرة من القرص بدل انتظار رفعها لمواقع الويب ثم إعادة تنزيلها.</p>
-            </div>
-            <div class="pillar">
-              <h3 class="pillar__title">تجربة محلية كاملة بلا حدود سحابية</h3>
-              <p class="pillar__desc">متاح للتنزيل والاختبار الفوري على ويندوز دون إنشاء حساب أو حدود يومية لعدد الملفات.</p>
+            <div>
+              <div class="meta-list">
+                <div class="meta-row">
+                  <span>النظام المدعوم</span>
+                  <strong class="num">Windows 10 / 11</strong>
+                </div>
+                <div class="meta-row">
+                  <span>المعالجة</span>
+                  <strong><span class="num">100%</span> على جهازك</strong>
+                </div>
+                <div class="meta-row">
+                  <span>فوق البيعة</span>
+                  <strong>أدوات إضافية تغنيك عن المواقع</strong>
+                </div>
+              </div>
+              <div style="margin-top:20px;">
+                <a class="btn btn--primary" style="width:100%;" href="https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe" download>
+                  <span>تنزيل رزمة لويندوز</span>
+                </a>
+              </div>
             </div>
           </div>
 
-          <div class="table-box">
-            <table class="comp-table">
-              <thead>
-                <tr>
-                  <th>المعيار التشغيلي</th>
-                  <th class="is-local">رزمة Rozma (سطح المكتب)</th>
-                  <th>المواقع السحابية</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>خصوصية ملفات العملاء</td>
-                  <td class="is-local ok-text">محلي 100% على جهازك</td>
-                  <td class="bad-text">يُرفع على خوادم خارجية</td>
-                </tr>
-                <tr>
-                  <td>سرعة الملفات الكبيرة</td>
-                  <td class="is-local ok-text">فورية من القرص الصلب</td>
-                  <td class="bad-text">بطء الرفع وإعادة التنزيل</td>
-                </tr>
-                <tr>
-                  <td>التكامل مع الطباعة السريعة</td>
-                  <td class="is-local ok-text">زي A4 وطباعة مباشرة من التطبيق</td>
-                  <td>يتطلب حفظ الملف ثم فتحه يدويًا</td>
-                </tr>
-                <tr>
-                  <td>القيود اليومية والتسجيل</td>
-                  <td class="is-local ok-text">بلا حسابات أو حدود سحابية</td>
-                  <td class="bad-text">عدد مهام يومي محدود</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="matrix-grid">
+            <button type="button" class="tool-cell tool-cell--primary" data-jump-tab="scan">
+              <div class="tool-cell__head">
+                <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 9h8M8 13h5"/></svg></span>
+                <span class="tool-cell__badge">الأساس</span>
+              </div>
+              <div>
+                <div class="tool-cell__title">صور ← A4 للطباعة</div>
+                <div class="tool-cell__desc">زي A4، تدوير وتمديد تلقائي</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="edit">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+              <div>
+                <div class="tool-cell__title">تعديل PDF</div>
+                <div class="tool-cell__desc">كتابة عربية، ختم وتوقيع</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="merge">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="11" height="14" rx="2"/><path d="M9 18v2a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/></svg></span>
+              <div>
+                <div class="tool-cell__title">دمج</div>
+                <div class="tool-cell__desc">تجميع ملفات متعددة بالترتيب</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="merge">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M16 3h5v5M8 3H3v5M12 22v-8.3a4 4 0 0 0-1.17-2.83L3 3M21 3l-7.83 7.87"/></svg></span>
+              <div>
+                <div class="tool-cell__title">تقسيم</div>
+                <div class="tool-cell__desc">فصل صفحات أو نطاقات محددة</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="merge">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg></span>
+              <div>
+                <div class="tool-cell__title">تدوير وترتيب</div>
+                <div class="tool-cell__desc">سحب، حذف، وتدوير الصفحات</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="compress">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7"/></svg></span>
+              <div>
+                <div class="tool-cell__title">ضغط</div>
+                <div class="tool-cell__desc">تقليص الحجم مع حفظ الوضوح</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="crop">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></span>
+              <div>
+                <div class="tool-cell__title">PDF إلى صور</div>
+                <div class="tool-cell__desc">تحويل الصفحات إلى PNG/JPG</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="compress">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg></span>
+              <div>
+                <div class="tool-cell__title">ترقيم عربي للطباعة</div>
+                <div class="tool-cell__desc">ترقيم صفحات مرن فوق الملف</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="crop">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2"/></svg></span>
+              <div>
+                <div class="tool-cell__title">قص الصور</div>
+                <div class="tool-cell__desc">إطار قص مرئي للصفحات</div>
+              </div>
+            </button>
+
+            <button type="button" class="tool-cell" data-jump-tab="crop">
+              <span class="tool-cell__icon"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
+              <div>
+                <div class="tool-cell__title">تحويل الصيغ</div>
+                <div class="tool-cell__desc">استخراج الصور المضمنة بدقتها</div>
+              </div>
+            </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Install & SmartScreen Guide -->
+    <!-- 5. Local Pipeline & Latency Strip -->
+    <section id="architecture" class="section">
+      <div class="container">
+        <div class="two-col-frame">
+          <div class="two-col-cell">
+            <h2 class="two-tone">
+              <span class="num">0ms</span> رفع سحابي.
+              <span class="two-tone__muted">سرعة القرص المحلي.</span>
+            </h2>
+            <div class="bench-list">
+              <div class="bench-row">
+                <div class="bench-row__head">
+                  <span>رزمة (محلي)</span>
+                  <span class="num">0.3s</span>
+                </div>
+                <div class="bench-track"><div class="bench-fill bench-fill--local"></div></div>
+              </div>
+              <div class="bench-row">
+                <div class="bench-row__head">
+                  <span>مواقع الرفع السحابية</span>
+                  <span class="num">45s+</span>
+                </div>
+                <div class="bench-track"><div class="bench-fill bench-fill--cloud"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col-cell">
+            <div class="drafting-box" style="min-height:100%;">
+              <div class="pipe-nodes">
+                <div class="pipe-node">
+                  <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+                  <span>صور واتساب / PDF</span>
+                </div>
+                <svg class="icon pipe-arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m0 0 5-5m-5 5 5 5"/></svg>
+                <div class="pipe-node">
+                  <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+                  <span>تجهيز A4 والحواف محلياً</span>
+                </div>
+                <svg class="icon pipe-arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m0 0 5-5m-5 5 5 5"/></svg>
+                <div class="pipe-node">
+                  <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                  <span>جاهز للطباعة فوراً</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SmartScreen Guide + FAQ + Closing CTA -->
     <section id="install" class="section">
-      <div class="wrap">
-        <div class="install-card">
-          <div>
-            <span class="section__eyebrow">التثبيت على ويندوز</span>
-            <h2 class="section__title">ثبّت رزمة Rozma في ثوانٍ</h2>
-            <p class="install-card__sub">
-              مثبّت خفيف بنقرة واحدة لويندوز 10 و11 (64-bit) يتحدث تلقائيًا في الخلفية عند صدور نسخ جديدة.
-            </p>
-            <div class="install-card__actions">
-              <a class="btn btn--primary btn--lg" href="https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe" download>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span>تنزيل Rozma-Setup.exe</span>
-              </a>
-              <a class="btn btn--lg" href="https://www.facebook.com/profile.php?id=61595212678708" target="_blank" rel="noopener">
-                <span>تواصل واقتراح الميزات (فيسبوك)</span>
-              </a>
-            </div>
-            <p class="install-card__specs">Windows 10 / 11 • مثبّت رسمي NSIS • معالجة محلية 100%</p>
+      <div class="container">
+        <div class="steps-rail">
+          <div class="step-cell">
+            <div class="step-cell__title">تشغيل المثبّت</div>
+            <div class="ui-chip"><span>تشغيل ملف التثبيت</span></div>
           </div>
-
-          <div class="smartscreen-box" role="note" aria-label="دليل التثبيت السريع على ويندوز">
-            <div class="smartscreen-box__head">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-              <span>خطوة واحدة عند ظهور Windows SmartScreen</span>
-            </div>
-            <p class="smartscreen-box__body">
-              عند تشغيل <strong>Rozma-Setup.exe</strong> لأول مرة، قد يعرض ويندوز تنبيه SmartScreen لأن المثبّت مستقل حديث النشر. اضغط <strong>«مزيد من المعلومات» (More info)</strong> ثم <strong>«التشغيل على أي حال» (Run anyway)</strong> ليكتمل التثبيت بنقرة واحدة خلال ثوانٍ، وتصلك التحديثات بعدها تلقائيًا في الخلفية.
-            </p>
+          <div class="step-cell">
+            <div class="step-cell__title">مزيد من المعلومات</div>
+            <div class="ui-chip"><span class="num">More info</span></div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="section section--alt">
-      <div class="wrap">
-        <div class="section__head">
-          <div>
-            <span class="section__eyebrow">الأسئلة الشائعة</span>
-            <h2 class="section__title">إجابات مختصرة وواضحة</h2>
+          <div class="step-cell">
+            <div class="step-cell__title">التشغيل على أي حال</div>
+            <div class="ui-chip ui-chip--accent"><span class="num">Run anyway</span></div>
           </div>
         </div>
 
         <div class="faq-list">
-          <div class="faq-item is-open">
-            <button class="faq-q" type="button">
-              <span>هل يعمل التطبيق دون إنترنت فعلًا؟</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="faq-a">
-              نعم. كل أدوات التعديل والدمج والترقيم والمسح تعمل محليًا على معالج جهازك دون إرسال أي ملفات لخوادم خارجية.
-            </div>
-          </div>
+          <details class="faq-item">
+            <summary>ما حالة الإصدار الحالي والترخيص؟</summary>
+            <div class="faq-item__body">الإصدار الحالي متاح مباشرة للاستخدام المحلي؛ ونُجري حالياً أبحاثاً مع المكتبات ومراكز الطباعة لتطوير مزايا متقدمة.</div>
+          </details>
+          <details class="faq-item">
+            <summary>هل تُرفع ملفاتي إلى الإنترنت؟</summary>
+            <div class="faq-item__body">لا، كل المعالجة تتم داخل جهازك دون أي اتصال خادمي.</div>
+          </details>
+          <details class="faq-item">
+            <summary>ما الأنظمة المدعومة؟</summary>
+            <div class="faq-item__body">يعمل على <span class="num">Windows 10 / 11</span> بمعمارية <span class="num">64-bit</span>.</div>
+          </details>
+          <details class="faq-item">
+            <summary>كيف تصل التحديثات الجديدة؟</summary>
+            <div class="faq-item__body">تصل تلقائياً في الخلفية عبر قناة الإصدارات الرسمية دون إعادة تحميل يدوي.</div>
+          </details>
+        </div>
 
-          <div class="faq-item">
-            <button class="faq-q" type="button">
-              <span>كيف تتعامل أداة «صور ← PDF» مع صور الواتساب والموبايل؟</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="faq-a">
-              تُحمَّل الصور بإطارها الكامل فورًا دون قص تلقائي مفاجئ، ويمكنك بضغطة على زر <strong>«زي A4»</strong> تمديد أي صورة لتملأ ورقة A4 طولية مع تدوير الصور العرضية تلقائيًا، أو تشغيل <strong>«اكتشاف أطراف الصورة»</strong> عند الحاجة.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">
-              <span>ما الأنظمة المدعومة وكيف تصل التحديثات؟</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="faq-a">
-              يدعم التطبيق نظام Windows 10 و Windows 11 (64-bit) عبر المثبّت الرسمي فقط، وتُنزَّل التحديثات وتُثبَّت صامتًا في الخلفية دون تدخل يدوي.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-q" type="button">
-              <span>ماذا أفعل إذا ظهرت شاشة Windows SmartScreen عند أول تشغيل؟</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="faq-a">
-              اضغط <strong>«مزيد من المعلومات» (More info)</strong> ثم <strong>«التشغيل على أي حال» (Run anyway)</strong> ليكتمل التثبيت فورًا. هذا إجراء طبيعي في ويندوز للمثبّتات المستقلة حديثة الإصدار.
-            </div>
-          </div>
+        <div class="closing-band">
+          <h2 class="two-tone">
+            جاهز على ويندوز.
+            <span class="two-tone__muted">تثبيت بنقرة واحدة — <span class="num">Windows 10 / 11</span>.</span>
+          </h2>
+          <a class="btn btn--primary" href="https://github.com/AHKH3/Rozma-releases/releases/latest/download/Rozma-Setup.exe" download>
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            <span>تنزيل رزمة لويندوز</span>
+          </a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="wrap footer__inner">
+    <div class="container footer__inner">
       <div class="brand">
-        <img class="brand__mark" src="branding/app-icon-192.png" alt="رزمة Rozma" width="28" height="28" />
-        <span>رزمة Rozma — أدوات تعديل الـPDF والصور على ويندوز</span>
+        <img class="brand__mark" src="branding/app-icon-192.png" alt="رزمة" width="24" height="24" />
+        <span>رزمة</span>
+        <span class="num">v1.0.26</span>
       </div>
-
-      <ul class="footer__links">
-        <li><a href="https://www.facebook.com/profile.php?id=61595212678708" target="_blank" rel="noopener">صفحة فيسبوك (الملاحظات واقتراح الميزات)</a></li>
-        <li><a href="https://github.com/AHKH3/Rozma-releases" target="_blank" rel="noopener">إصدارات GitHub</a></li>
-        <li><a href="#tools">الأدوات</a></li>
-        <li><a href="#install">التثبيت</a></li>
-      </ul>
-
-      <p>© <span class="num">2026</span> رزمة Rozma.</p>
+      <div class="footer__links">
+        <a href="#tools">الأدوات</a>
+        <a href="#studio">المعاينة</a>
+        <a href="#install">التثبيت</a>
+        <a href="https://www.facebook.com/profile.php?id=61595212678708" target="_blank" rel="noopener">فيسبوك</a>
+      </div>
     </div>
   </footer>
 
   <script>
-    (function () {
+    (() => {
       const root = document.documentElement;
-      const saved = localStorage.getItem("pdfstudio_theme");
-      if (saved === "sheet" || saved === "blueprint") {
-        root.setAttribute("data-theme", saved);
-      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        root.setAttribute("data-theme", "blueprint");
+      const themeBtns = document.querySelectorAll("[data-theme-pick]");
+      const tabBtns = document.querySelectorAll("[data-tab]");
+      const panels = document.querySelectorAll("[data-panel]");
+      const breadcrumb = document.getElementById("studio-breadcrumb");
+      const TAB_TITLES = {
+        scan: "صور ← PDF · زي A4",
+        merge: "دمج وترتيب الصفحات",
+        edit: "تعديل وختم عربي",
+        compress: "ضغط وترقيم عربي",
+        crop: "قص وتحويل واستخراج"
+      };
+
+      const setTheme = (theme) => {
+        root.setAttribute("data-theme", theme);
+        themeBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.themePick === theme)));
+      };
+      themeBtns.forEach((b) => b.addEventListener("click", () => setTheme(b.dataset.themePick)));
+
+      const activateTab = (key) => {
+        tabBtns.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === key)));
+        panels.forEach((p) => p.classList.toggle("is-active", p.dataset.panel === key));
+        if (breadcrumb && TAB_TITLES[key]) breadcrumb.textContent = TAB_TITLES[key];
+      };
+      tabBtns.forEach((b) => b.addEventListener("click", () => activateTab(b.dataset.tab)));
+
+      document.querySelectorAll("[data-jump-tab]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          activateTab(btn.dataset.jumpTab);
+          document.getElementById("studio")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+
+      const a4Btn = document.getElementById("demo-a4-btn");
+      const edgeBtn = document.getElementById("demo-edge-btn");
+      const allBtn = document.getElementById("demo-all-btn");
+      const a4Sheet = document.getElementById("demo-a4-sheet");
+      const a4Label = document.getElementById("demo-a4-label");
+      const sourceCard = document.getElementById("demo-source-card");
+
+      if (a4Btn && a4Sheet && a4Label) {
+        a4Btn.addEventListener("click", () => {
+          const next = a4Btn.getAttribute("aria-pressed") !== "true";
+          a4Btn.setAttribute("aria-pressed", String(next));
+          document.getElementById("demo-a4-state").textContent = next ? "مفعّل" : "عادي";
+          a4Sheet.classList.toggle("is-stretched", next);
+          a4Label.textContent = next ? "ملء الورقة الطولية بالكامل" : "توسيط ضمن الهوامش";
+        });
       }
-
-      document.getElementById("theme-toggle")?.addEventListener("click", function () {
-        const next = root.getAttribute("data-theme") === "blueprint" ? "sheet" : "blueprint";
-        root.setAttribute("data-theme", next);
-        localStorage.setItem("pdfstudio_theme", next);
-      });
-
-      document.querySelectorAll(".preview-tab").forEach(function (tab) {
-        tab.addEventListener("click", function () {
-          const target = tab.getAttribute("data-pane");
-          document.querySelectorAll(".preview-tab").forEach(function (t) {
-            t.classList.toggle("is-active", t === tab);
-          });
-          document.querySelectorAll(".preview-pane").forEach(function (p) {
-            p.classList.toggle("is-active", p.getAttribute("data-pane-body") === target);
-          });
+      if (edgeBtn && sourceCard) {
+        edgeBtn.addEventListener("click", () => {
+          const next = edgeBtn.getAttribute("aria-pressed") !== "true";
+          edgeBtn.setAttribute("aria-pressed", String(next));
+          document.getElementById("demo-edge-state").textContent = next ? "محدد" : "اختياري";
+          sourceCard.classList.toggle("is-edged", next);
         });
-      });
-
-      const simA4 = document.getElementById("sim-a4-toggle");
-      const simEdges = document.getElementById("sim-edges-toggle");
-      const simSheet = document.getElementById("sim-sheet");
-      const simCaption = document.getElementById("sim-caption");
-
-      function syncSim() {
-        const a4 = simA4?.classList.contains("is-on");
-        const edges = simEdges?.classList.contains("is-on");
-        simSheet?.classList.toggle("is-a4", Boolean(a4));
-        if (simCaption) {
-          simCaption.innerHTML = (a4 ? "A4 طولي ممتد" : "حدود كاملة متناسبة") +
-            (edges ? " + كشف أطراف" : "") +
-            ' • <span class="num">595 × 842 pt</span>';
-        }
       }
-
-      simA4?.addEventListener("click", function () {
-        simA4.classList.toggle("is-on");
-        syncSim();
-      });
-      simEdges?.addEventListener("click", function () {
-        simEdges.classList.toggle("is-on");
-        syncSim();
-      });
-
-      document.querySelectorAll(".filter-pill").forEach(function (pill) {
-        pill.addEventListener("click", function () {
-          const cat = pill.getAttribute("data-filter");
-          document.querySelectorAll(".filter-pill").forEach(function (p) {
-            p.classList.toggle("is-active", p === pill);
-          });
-          document.querySelectorAll(".tool-card").forEach(function (card) {
-            const match = cat === "all" || card.getAttribute("data-cat") === cat;
-            card.hidden = !match;
-          });
+      if (allBtn) {
+        allBtn.addEventListener("click", () => {
+          const next = allBtn.getAttribute("aria-pressed") !== "true";
+          allBtn.setAttribute("aria-pressed", String(next));
+          document.getElementById("demo-all-state").textContent = next ? "كل الصفحات" : "صفحة 1";
         });
-      });
-
-      document.querySelectorAll(".faq-q").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          const item = btn.closest(".faq-item");
-          if (item) item.classList.toggle("is-open");
-        });
-      });
+      }
     })();
   </script>
 </body>
